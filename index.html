@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Biblioteca Compartilhada</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"></script>
@@ -16,6 +17,46 @@
 
   <main id="book-list" class="grid"></main>
 
-  <script src="script.js"></script>
+  <!-- Script principal com type="module" -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // ⚙️ Coloque aqui sua configuração do Firebase:
+    const firebaseConfig = {
+      apiKey: "SUA_CHAVE_API",
+      authDomain: "SEU_PROJETO.firebaseapp.com",
+      projectId: "SEU_PROJETO",
+      storageBucket: "SEU_PROJETO.appspot.com",
+      messagingSenderId: "SEU_ID",
+      appId: "SEU_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function carregarLivros() {
+      const lista = document.getElementById("book-list");
+      const querySnapshot = await getDocs(collection(db, "livros"));
+      lista.innerHTML = "";
+
+      querySnapshot.forEach((doc) => {
+        const livro = doc.data();
+        lista.innerHTML += `
+          <div class="card">
+            <img src="${livro.foto}" alt="${livro.titulo}">
+            <h3>${livro.titulo}</h3>
+            <p>${livro.descricao}</p>
+          </div>
+        `;
+      });
+
+      if (querySnapshot.empty) {
+        lista.innerHTML = "<p>Nenhum livro cadastrado ainda.</p>";
+      }
+    }
+
+    carregarLivros();
+  </script>
 </body>
 </html>
