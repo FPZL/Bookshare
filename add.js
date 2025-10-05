@@ -3,7 +3,14 @@ import { getFirestore, collection, addDoc } from "https://www.gstatic.com/fireba
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const firebaseConfig = {
-  // coloque aqui suas configs do Firebase
+  apiKey: "AIzaSyBcVAW6i41Ss2K8JvG6mwsGKsu1dKQqiW0",
+  authDomain: "bookshare-3a815.firebaseapp.com",
+  databaseURL: "https://bookshare-3a815-default-rtdb.firebaseio.com",
+  projectId: "bookshare-3a815",
+  storageBucket: "bookshare-3a815.firebasestorage.app",
+  messagingSenderId: "284448011811",
+  appId: "1:284448011811:web:abd5dcf34312b2f6f1e396",
+  measurementId: "G-4KE49WKX23"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -29,3 +36,4 @@ document.getElementById("book-form").addEventListener("submit", async (e) => {
   alert("📘 Livro adicionado com sucesso!");
   window.location.href = "index.html";
 });
+
